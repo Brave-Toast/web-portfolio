@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Portfolio | [Your Name]</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">./user_profile</div>
+        <ul class="nav-links">
+            <li><a href="#about">_about</a></li>
+            <li><a href="#skills">_skills</a></li>
+            <li><a href="#projects">_projects</a></li>
+            <li><a href="#experience">_experience</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <p class="prompt">root@kali:~$ ./introduce_self.sh</p>
+            <h1>James Mulhall</h1>
+            <h2>Cybersecurity Student & Analyst</h2>
+            <p class="bio">Securing networks, analyzing packets, and building tools. <br>Currently completing my degree and seeking Junior Analyst roles.</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn primary">Contact Me</a>
+                <a href="resume.pdf" target="_blank" class="btn secondary">Download CV</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="container">
+        <h3 class="section-title">01. About Me</h3>
+        <p>I am a final-year cybersecurity student with a passion for Blue Teaming and Network Defense. My professional background is currently events and wedding bartending, which has trained me to remain calm and productive in high stress situations.</p>
+        <p>Currently focusing on: <strong>Network Forensics, Python Scripting, and Linux Administration.</strong></p>
+    </section>
+
+    <section id="skills" class="container">
+        <h3 class="section-title">02. Technical Arsenal</h3>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h4>Languages</h4>
+                <p>Python, Ruby, Bash, SQL</p>
+            </div>
+            <div class="skill-card">
+                <h4>Tools</h4>
+                <p>Wireshark, Nmap, Metasploit, Burp Suite, Splunk</p>
+            </div>
+            <div class="skill-card">
+                <h4>Concepts</h4>
+                <p>OSI Model, TCP/IP, MITRE ATT&CK, Incident Response</p>
+            </div>
+            <div class="skill-card">
+                <h4>OS</h4>
+                <p>Linux (Kali, Ubuntu), Windows Server, Active Directory</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="container">
+        <h3 class="section-title">03. Projects</h3>
+        <div class="project-grid">
+            <div class="project-card">
+                <div class="card-header">
+                    <h4>Python EDR Tool</h4> <span class="tag">Python</span>
+                    <span class="tag">Linux</span>
+                </div>
+                <p>Developed a lightweight Endpoint Detection and Response agent that monitors file system changes and flags suspicious processes in real-time.</p>
+                <a href="project-edr.html" class="project-link">View Source <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+           <div class="project-card">
+    <div class="card-header">
+        <h4>Homelab DMZ</h4>
+        <span class="tag">pfSense</span>
+        <span class="tag">Zero Trust</span>
+    </div>
+    <p>Engineered a segmented lab environment simulating an enterprise DMZ. Implemented <strong>"Least Privilege"</strong> firewall rules to block lateral movement and harden management interfaces.</p>
+    <a href="project-homelab.html" class="project-link">View Documentation <i class="fas fa-arrow-right"></i></a>
+</div>
+
+             <div class="project-card">
+    <div class="card-header">
+        <h4>Raw Socket Sniffer</h4>
+        <span class="tag">Ruby</span>
+        <span class="tag">Networking</span>
+    </div>
+    <p>A manual packet analyzer that unpacks binary TCP/IP headers to detect SYN flags without using external networking libraries.</p>
+    <a href="ruby-sniffer.html" class="project-link">View Source <i class="fas fa-arrow-right"></i></a>
+</div>
+        </div>
+    </section>
+
+    <section id="experience" class="container">
+        <h3 class="section-title">04. Experience</h3>
+        
+        <div class="job">
+            <div class="job-header">
+                <h4>Cybersecurity Student</h4>
+                <span class="date">2022 - Present</span>
+            </div>
+            <p class="company">Swinburne University of Technology</p>
+            <ul>
+                <li>Specializing in Network Security and Secure Coding.</li>
+                <li>Completed EDR development and CTI project.</li>
+            </ul>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <h4>Bartender / Shift Lead</h4>
+                <span class="date">2020 - Present</span>
+            </div>
+            <p class="company">Panama Dining Room</p>
+            <ul>
+                <li>Developed strong communication skills and the ability to multitask in high-stress environments.</li>
+                <li>Managed closing procedures and cash handling responsibilities.</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <h3>Initialize Connection</h3>
+        <p>I am currently open to internships and junior roles.</p>
+        <div class="socials">
+            <a href="mailto:James.PK.Mulhall.27@gmail.com">Email</a>
+            <a href="https://www.linkedin.com/in/james-m-9637b927b/">LinkedIn</a>
+            <a href="https://github.com/Brave-Toast">GitHub</a>
+        </div>
+        <p class="copyright">&copy; 2025 James Mulhall. Built with HTML & CSS.</p>
+    </footer>
+
+</body>
+</html>

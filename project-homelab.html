@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Secure Home Lab | [Your Name]</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">./project_details</div>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-arrow-left"></i> cd .. (Home)</a></li>
+        </ul>
+    </nav>
+
+    <!-- Project Header -->
+    <header class="project-hero">
+        <div class="container">
+            <span class="tag">pfSense</span>
+            <span class="tag">Network Engineering</span>
+            <span class="tag">Firewall Rules</span>
+            <span class="tag">VMware</span>
+            <h1>Secure Network Segmentation Lab</h1>
+            <p class="subtitle">Designing and implementing a segmented virtual network with strict firewall policies to simulate an enterprise DMZ environment.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container project-content">
+        
+        <!-- The Objective -->
+        <section class="content-block">
+            <h3>01. The Objective</h3>
+            <p>Attacking a flat network is easy. To better understand defensive architecture, I migrated my standalone attack/victim VMs into a managed environment routed through a virtualized <strong>pfSense Firewall</strong>. The goal was to simulate a "DMZ" (Demilitarized Zone) for my vulnerable web server (Juice Shop) while restricting lateral movement from the attack box, implementing a <strong>Zero Trust</strong> mindset.</p>
+        </section>
+
+        <!-- Topology -->
+        <section class="content-block">
+            <h3>02. Network Topology</h3>
+            <p>I utilized VMware Workstation's "LAN Segments" to air-gap the lab from my host machine, forcing all traffic through the firewall gateway.</p>
+            
+            <div class="project-card" style="text-align: left; cursor: default; border: 1px solid #333;">
+                <h4 style="margin-bottom: 15px; color: var(--accent-color);">Lab Architecture</h4>
+                <ul class="tech-list">
+                    <li><strong>WAN (External):</strong> NAT to Host Machine (Internet Access)</li>
+                    <li><strong>Gateway (pfSense):</strong> <code>192.168.1.1</code> (Acts as DNS & DHCP Server)</li>
+                    <li><strong>Target VLAN:</strong> Ubuntu Web Server (<code>192.168.1.10</code>) hosting OWASP Juice Shop</li>
+                    <li><strong>Attack VLAN:</strong> Kali Linux (<code>192.168.1.20</code>)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Configuration/Rules -->
+        <section class="content-block">
+            <h3>03. Configuration: Least Privilege Rules</h3>
+            <p>I moved beyond the default "Allow All" settings to implement strict traffic control. I defined <strong>Aliases</strong> for my assets (e.g., <code>Kali_Attacker</code>) to keep rules clean. Below is the logic used to enforce the security policy:</p>
+            
+            <div class="code-window">
+                <div class="window-header">
+                    <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                    <span class="title">pfSense Firewall Rules (LAN Interface)</span>
+                </div>
+                <pre><code>
+# 1. Anti-Lockout (Hidden Rule)
+PASS   TCP/UDP   * * Firewall_Self   80/443   (Implicit)
+
+# 2. Block Management Access (Proof of Segmentation)
+BLOCK  ICMP      Kali_Attacker  * Firewall_Self   * "Block Kali Ping to Gateway"
+
+# 3. Allow Business Function (Juice Shop)
+PASS   TCP       Kali_Attacker  * Ubuntu_Server   3000     "Allow Traffic to Web App"
+
+# 4. Prevent Lateral Movement
+BLOCK  TCP       Kali_Attacker  * Ubuntu_Server   22       "Block SSH Lateral Movement"
+
+# 5. Default Deny (Implicit)
+BLOCK  * * * * * "Block all other traffic"
+                </code></pre>
+            </div>
+        </section>
+
+        <!-- Challenges -->
+        <section class="content-block">
+            <h3>04. Challenges & Solutions</h3>
+            <div class="challenge-card">
+                <h4>The "Locked Out" Incident</h4>
+                <p><strong>Challenge:</strong> While configuring the "Deny All" rule at the bottom of my ruleset, I accidentally applied it before ensuring my management computer (Ubuntu) had explicit permission to access the Web Interface. This instantly locked me out of the router, as I cut off the branch I was sitting on.</p>
+                <p><strong>Solution:</strong> I learned that firewall rule ordering is critical (Top-Down processing). I had to access the VM console directly in VMware to reset the rules via the CLI option <code>pfctl -d</code> (disable packet filtering) to regain access. I now implement a specific "Allow Management" alias rule at the very top of my policy list.</p>
+            </div>
+
+            <div class="challenge-card" style="margin-top: 20px;">
+                <h4>Protocol Confusion</h4>
+                <p><strong>Challenge:</strong> Initially, I couldn't access the Juice Shop website even after creating an "Allow" rule. I realized I had set the protocol to "TCP/UDP" but had selected the wrong Source Port range (setting it to 3000 instead of "Any").</p>
+                <p><strong>Solution:</strong> I corrected the rule to allow <strong>Source: Any</strong> and <strong>Destination Port: 3000</strong>, reinforcing my understanding that client traffic originates from ephemeral high-numbered ports, not the service port.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 James Mulhall. <a href="index.html">Return to Home</a></p>
+    </footer>
+
+</body>
+</html>
